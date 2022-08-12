@@ -73,6 +73,8 @@ var loader = new THREE.TextureLoader();
         const map2 = new THREE.Mesh(mapgeo,map2material);
         // map.position.=0;
         // map2.position.z=1;
+	mapmaterial.alphaTest = 0.5;
+        map2material.alphaTest = 0.5;
         
         aerialgroup.add(map);
         drawinggroup.add(map2);
@@ -86,7 +88,7 @@ var loader = new THREE.TextureLoader();
         for ( var i = 0; i < particles; i ++ ) {
             var x = Math.random() * n - n2;
             var y = Math.random() * n - n2;
-            var z = Math.random() * n - n2;
+            var z = -1;
             positions.push( x, y, z );
 
         }
