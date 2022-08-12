@@ -77,6 +77,11 @@ var loader = new THREE.TextureLoader();
         
         aerialgroup.add(map);
         drawinggroup.add(map2);
+			
+	const watergeo = new THREE.PlaneGeometry(200,200);
+	const watermaterial = new THREE.PointsMaterial( { color: 0xffffff } );
+	const water = new THREE.Points(watergeo, watermaterial);
+	scene.add(water);
 
     // function initmediaobj(){
     //     var loader = new THREE.TextureLoader();
