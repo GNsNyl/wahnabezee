@@ -139,7 +139,7 @@ function init() {
 
   // camera
 
-  camera = new THREE.PerspectiveCamera( 50, width / height, 1, 100 );
+  camera = new THREE.OrthographicCamera( 50, width / height, 1, 100 );
   camera.position.z = 40;
   camera.position.y = 0;
 
