@@ -81,7 +81,8 @@ var loader = new THREE.TextureLoader();
 	const watergeo = new THREE.PlaneGeometry(200,200);
 	const watermaterial = new THREE.PointsMaterial( { color: 0xffffff } );
 	const water = new THREE.Points(watergeo, watermaterial);
-	scene.add(water);
+			water.position.z = -0.1
+	drawinggroup.add(water);
 
     // function initmediaobj(){
     //     var loader = new THREE.TextureLoader();
