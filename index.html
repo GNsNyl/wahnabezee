@@ -96,24 +96,7 @@ var loader = new THREE.TextureLoader();
     
         drawinggroup.add(water);
 
-    // function initmediaobj(){
-    //     var loader = new THREE.TextureLoader();
-    //     const mapgeo = new THREE.PlaneGeometry(30,21);
-    //     const mapmaterial = new THREE.MeshBasicMaterial({map: loader.load("map.png"), transparent:true});
-    //     const map2material = new THREE.MeshBasicMaterial({map: loader.load("basemap.png"), transparent:true})
 
-    //     const map = new THREE.Mesh(mapgeo,mapmaterial);
-    //     // map.rotation.y= 0.5*Math.PI;
-    //     const map2 = new THREE.Mesh(mapgeo,map2material);
-    //     // map.position.=0;
-    //     map2.position.z=1;
-        
-    //     aerialgroup.add(map);
-    //     drawinggroup.add(map2);
-
-    //     // scene.add(map);
-
-    // }
     scene.add(drawinggroup);
     var params = {
 				scene: "drawing"
@@ -140,7 +123,6 @@ function init() {
   // camera
 
   camera = new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / -2, 1, 100 );
-	camera.rotation.x= 0.5 * Math.PI
 //   camera.position.z = 40;
 //   camera.position.y = 0;
 
