@@ -78,11 +78,24 @@ var loader = new THREE.TextureLoader();
         aerialgroup.add(map);
         drawinggroup.add(map2);
 			
-	const watergeo = new THREE.PlaneGeometry(200,200);
-	const watermaterial = new THREE.PointsMaterial( { color: 0xffffff } );
-	const water = new THREE.Points(watergeo, watermaterial);
-			water.position.z = -0.1
-	drawinggroup.add(water);
+	var particles = 6777;
+        let positions = [];
+        var geometry = new THREE.BufferGeometry();
+        var n = 50, n2 = n / 2; 
+        var materialpoints = new THREE.PointsMaterial( { color: 0xffffff, size: 0.1, vertexColors: false } );
+
+        for ( var i = 0; i < particles; i ++ ) {
+            var x = Math.random() * n - n2;
+            var y = Math.random() * n - n2;
+            var z = Math.random() * n - n2;
+            positions.push( x, y, z );
+
+        }
+        geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
+        geometry.computeBoundingSphere();
+        const water = new THREE.Points( geometry, materialpoints );
+    
+        drawinggroup.add(water);
 
     // function initmediaobj(){
     //     var loader = new THREE.TextureLoader();
