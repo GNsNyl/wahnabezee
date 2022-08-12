@@ -41,7 +41,6 @@ let camera, light, backlight, controls, scene, renderer, material;
 
 // gui
 
-
 const Method = {
   INSTANCED: 'INSTANCED',
   MERGED: 'MERGED',
@@ -82,7 +81,7 @@ var loader = new THREE.TextureLoader();
         let positions = [];
         var geometry = new THREE.BufferGeometry();
         var n = 50, n2 = n / 2; 
-        var materialpoints = new THREE.PointsMaterial( { color: 0xffffff, size: 0.1, vertexColors: false } );
+        var materialpoints = new THREE.PointsMaterial( { map: loader.load("water.png"), transparent:true,  size: 1, vertexColors: false } );
 
         for ( var i = 0; i < particles; i ++ ) {
             var x = Math.random() * n - n2;
