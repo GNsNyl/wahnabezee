@@ -79,6 +79,16 @@ var loader = new THREE.TextureLoader();
         aerialgroup.add(map);
         drawinggroup.add(map2);
 			
+// 	const beematerial = new THREE.MeshBasicMaterial({map: loader.load("bee.png"), transparent:true});
+// 	beematerial..alphaTest = 0.5;
+// 	const beegeo = new THREE.PlaneGeometry(4,4);
+// 	const bee = new THREE.Mesh(beegeo, beematerial);
+			
+// 	function animatebee(){
+// 	bee.rotation.y = 
+// 	}
+	
+			
 	var particles = 40777;
         let positions = [];
         var geometry = new THREE.BufferGeometry();
@@ -159,6 +169,7 @@ camera = new THREE.PerspectiveCamera( 50, width / height, 1, 100 );
   controls = new OrbitControls( camera, renderer.domElement );
   controls.enableRotate = false
   // controls.autoRotate = true;
+	controls.maxDistance = 50;
 
   // stats
 
