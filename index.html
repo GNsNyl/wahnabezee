@@ -167,6 +167,12 @@ camera = new THREE.PerspectiveCamera( 50, width / height, 1, 100 );
   // controls
 
   controls = new OrbitControls( camera, renderer.domElement );
+	
+	controls.mouseButtons = {
+	RIGHT: THREE.MOUSE.ROTATE,
+	MIDDLE: THREE.MOUSE.DOLLY,
+	LEFT: THREE.MOUSE.PAN
+}
   controls.enableRotate = false;
   // controls.autoRotate = true;
 	controls.maxDistance = 30;
