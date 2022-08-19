@@ -70,7 +70,8 @@ var loader = new THREE.TextureLoader();
 	mapmaterial.alphaTest = 0.5;
         map2material.alphaTest = 0.5;
 	cloudmaterial.alphaTest = 0.5;
-	const cloudmaterial = new THREE.Mesh BasicMaterial({map: loader.load("cloud.png"), transparent:true});
+			
+	const cloudmaterial = new THREE.MeshBasicMaterial({map: loader.load("cloud.png"), transparent:true});
 	const cloudgeo = new THREE.PlaneGeometry(15,4.2);
 	const cloud = new THREE.Mesh(cloudgeo, cloudmaterial)
 	
