@@ -179,8 +179,8 @@ camera = new THREE.PerspectiveCamera( 50, width / height, 1, 100 );
 
   // stats
 
-  stats = new Stats();
-  container.appendChild( stats.dom );
+//   stats = new Stats();
+//   container.appendChild( stats.dom );
 
 
         scene.add(light)
@@ -211,7 +211,7 @@ function animate() {
   requestAnimationFrame( animate );
 
   controls.update();
-  stats.update();
+//   stats.update();
 
   render();
 
