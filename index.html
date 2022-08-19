@@ -67,17 +67,25 @@ var loader = new THREE.TextureLoader();
         const mapgeo = new THREE.PlaneGeometry(30,21);
         const mapmaterial = new THREE.MeshBasicMaterial({map: loader.load("map.png"), transparent:true});
         const map2material = new THREE.MeshBasicMaterial({map: loader.load("basemap.png"), transparent:true})
-
+	mapmaterial.alphaTest = 0.5;
+        map2material.alphaTest = 0.5;
+	cloudmaterial.alphaTest = 0.5;
+	const cloudmaterial = new THREE.Mesh BasicMaterial({map: loader.load("cloud.png"), transparent:true});
+	const cloudgeo = new THREE.PlaneGeometry(15,4.2);
+	const cloud = new THREE.Mesh(cloudgeo, cloudmaterial)
+	
         const map = new THREE.Mesh(mapgeo,mapmaterial);
         // map.rotation.y= 0.5*Math.PI;
         const map2 = new THREE.Mesh(mapgeo,map2material);
         // map.position.=0;
         // map2.position.z=1;
-	mapmaterial.alphaTest = 0.5;
-        map2material.alphaTest = 0.5;
+			
+	cloud.position.z = 5;
+	cloud.position.x = -4;
+	
         
         aerialgroup.add(map);
-        drawinggroup.add(map2);
+        drawinggroup.add(map2, cloud);
 			
 // 	const beematerial = new THREE.MeshBasicMaterial({map: loader.load("bee.png"), transparent:true});
 // 	beematerial..alphaTest = 0.5;
