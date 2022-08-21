@@ -39,6 +39,21 @@ let container, stats, guiStatsEl;
     // let gui
 let camera, light, backlight, controls, scene, renderer, material;
 
+const loader = new THREE.TextureLoader();
+
+const aerialgroup = new THREE.Group();
+const drawinggroup = new THREE.Group();
+const bubblegroup = new THREE.Group();
+
+var time = new THREE.Clock();
+
+const objects=[];
+const annotations=[];
+
+bubblegroup.add(objects);
+
+
+
 // gui
 
 const Method = {
@@ -52,7 +67,36 @@ const api = {
   count: 1000
 };
 
-//
+//raycaster/////////////////////////////////////////////////////////////////////////////////
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+function onPointerDown( event ) {
+
+// calculate pointer position in normalized device coordinates
+// (-1 to +1) for both components
+
+
+    pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+				raycaster.setFromCamera( pointer, camera );
+				const intersects = raycaster.intersectObjects( objects, false );
+                if ( intersects.length > 0 ) {
+                    const intersect = intersects[ 0 ];
+                    for (let a = 0; a<objects.length; a++){
+                        if (objects[a]===intersect.object) {
+                            bubblegroup.add(annotations[a])
+                        } 
+                        else{
+                            bubblegroup.remove(annotations[a])
+                        }
+                    }
+    }};
+window.addEventListener( 'pointerdown', onPointerDown );
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 init();
     // initmediaobj();
@@ -60,10 +104,7 @@ init();
 animate();
 
 
-const aerialgroup = new THREE.Group();
-const drawinggroup = new THREE.Group();
 
-var loader = new THREE.TextureLoader();
         const mapgeo = new THREE.PlaneGeometry(30,21);
         const mapmaterial = new THREE.MeshBasicMaterial({map: loader.load("map.png"), transparent:true});
         const map2material = new THREE.MeshBasicMaterial({map: loader.load("basemap.png"), transparent:true})
@@ -102,9 +143,76 @@ var loader = new THREE.TextureLoader();
 // 	function animatebee(){
 // 	bee.rotation.y = 
 // 	}
-	
+const annotationlist=["bee.png", "water.png"]
+for (let i=0; i<annotationlist.length; i++){
+    let annotationmaterial, annotationgeo, annotationsprite;
+
+    let bubble, bubblegeo, bubblecolor;
+    let agroup;
+
+    agroup = new THREE.Group();
+
+    annotationmaterial = new THREE.MeshBasicMaterial({map:loader.load(annotationlist[i]), transparent:true});
+    annotationgeo = new THREE.PlaneGeometry(2,2)
+
+    const color = new THREE.Color();
+	color.setHSL( Math.random(), 0.7, Math.random() * 0.2 + 0.05, 0.1 );
+
+    bubblegeo = new THREE.SphereGeometry( 0.3, 15 );
+    
+	bubblecolor = new THREE.MeshBasicMaterial( { map: loader.load(annotationlist[i]), transparent:true } );
+
+	bubble = new THREE.Mesh( bubblegeo, bubblecolor );
+    bubble.position.set( 5*Math.random(),3* Math.random(), Math.random())
+
+    annotationsprite = new THREE.Mesh(annotationgeo, annotationmaterial);
+   
+    bubbleanimate();
+
+    function bubbleanimate() {
+        const elapsedTime = time.getElapsedTime();
+        const elapsedTimeInMs = Math.round(elapsedTime * 1000);
+
+        const radius = 3;
+        const speed = 0.05;
+        const heightAngle = (i+1)*elapsedTime * speed + i;
+        const thetaAngle = (i+1)* elapsedTime * -speed + i;
+
+        bubble.position.x = radius * Math.cos(thetaAngle) + i;
+        bubble.position.y = radius * Math.sin(thetaAngle) + i;
+        bubble.position.z = radius * Math.cos(heightAngle);
+
+        // bubble.position.x += 0.001 * Math.random();
+        // bubble.position.y += 0.001 * Math.random();
+        // bubble.position.z += 0.001 * Math.random();
+        
+        annotationsprite.position.copy(bubble.position)
+        annotationsprite.position.z = annotationsprite.position.z+0.5;
+        annotationsprite.position.y = annotationsprite.position.y+0.5;
+        annotationsprite.position.x = annotationsprite.position.x+0.5;            
+        requestAnimationFrame( bubbleanimate );
+            controls.update();
+            render();
+            }
+
+    // agroup.add(bubble);
+    // bubble.add(annotationsprite);
+
+    // bubble.add(annotationsprite)
+    // annotationsprite.visible=false;
+    // annotationsprite.scale.set( awidth, aheight, 1 );
+    objects.push(bubble)
+    annotations.push(annotationsprite)
+    // bubble.add(annotationsprite)
+
+    bubblegroup.add(bubble);
+
+
+}
+
+
 			
-	var particles = 40777;
+var particles = 40777;
         let positions = [];
         var geometry = new THREE.BufferGeometry();
         var n = 50, n2 = n / 2; 
@@ -124,20 +232,26 @@ var loader = new THREE.TextureLoader();
         drawinggroup.add(water);
 
 
-    scene.add(drawinggroup);
+    scene.add(bubblegroup);
     var params = {
-				scene: "drawing"
+				scene: "bubble"
 			};
 const gui = new GUI();
 
-gui.add(params,'scene',['aerial map', 'drawing']).onChange( function (value){
+gui.add(params,'scene',['aerial map', 'drawing', 'bubble']).onChange( function (value){
   switch(value){
     case 'aerial map': scene.add(aerialgroup);
                         scene.remove(drawinggroup);
+                        scene.remove(bubblegroup);
+
                         break;
-    case 'drawing': scene.remove(aerialgroup);
                         scene.add(drawinggroup);   
-                        break;             
+                        scene.remove(bubblegroup);
+                        break;    
+   case 'bubble': scene.remove(aerialgroup);
+                    scene.remove(drawinggroup);
+                        scene.add(bubblegroup);   
+                        break;           
   }
 })
 
@@ -222,7 +336,6 @@ function onWindowResize() {
 }
 
 function animate() {
-
   requestAnimationFrame( animate );
 
   controls.update();
