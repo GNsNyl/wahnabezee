@@ -92,29 +92,7 @@ function onPointerDown( event ) {
                         }
                     }
     }
-	function onPointerDown2( event ) {
 
-// calculate pointer position in normalized device coordinates
-// (-1 to +1) for both components
-
-
-//     pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
-
-// 	raycaster.setFromCamera( pointer, camera );
-
-    const intersectimg = raycaster.intersectObjects( annotations, false );
-                if ( intersectimg.length > 0 ) {
-                    const intersectim = intersectimg[ 0 ];
-                    for (let b = 0; b<objects.length; b++){
-                        if (annotations[b]===intersectim.object) {
-                            bubblegroup.remove(annotations[b])
-                        } 
-                      
-                    }
-    }
-
-};
-window.addEventListener( 'pointerdown', onPointerDown2 );
 
 };
 window.addEventListener( 'pointerdown', onPointerDown );
