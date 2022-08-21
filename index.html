@@ -91,18 +91,16 @@ function onPointerDown( event ) {
                             bubblegroup.remove(annotations[a])
                         }
                     }
-    }};
-window.addEventListener( 'pointerdown', onPointerDown );
-			
-function onPointerDown2( event ) {
+    }
+	function onPointerDown2( event ) {
 
 // calculate pointer position in normalized device coordinates
 // (-1 to +1) for both components
 
 
-    pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+//     pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
 
-	raycaster.setFromCamera( pointer, camera );
+// 	raycaster.setFromCamera( pointer, camera );
 
     const intersectimg = raycaster.intersectObjects( annotations, false );
                 if ( intersectimg.length > 0 ) {
@@ -117,6 +115,11 @@ function onPointerDown2( event ) {
 
 };
 window.addEventListener( 'pointerdown', onPointerDown2 );
+
+};
+window.addEventListener( 'pointerdown', onPointerDown );
+			
+
 
 
 
