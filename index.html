@@ -252,6 +252,7 @@ gui.add(params,'scene',['aerial map', 'drawing', 'bubble']).onChange( function (
                         scene.remove(bubblegroup);
 
                         break;
+   case 'drawing': scene.remove(aerialgroup);
                         scene.add(drawinggroup);   
                         scene.remove(bubblegroup);
                         break;    
